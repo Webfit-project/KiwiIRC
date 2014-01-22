@@ -76,7 +76,8 @@ HttpHandler.prototype.serve = function (request, response) {
             post_data = querystring.parse(data);
             console.log('POST', post_data);
         });
-    } else if (request.method === "GET" && request.url.match(/\?/g)) { // No time to waist if there's no querystring !
+    } 
+    if (request.method === "GET" && request.url.match(/\?/g)) { // No time to waist if there's no querystring !
         data = url.parse(request.url, true);
         get_data = data.query;
         console.log('GET', get_data);
