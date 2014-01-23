@@ -1,0 +1,14 @@
+<script>
+	// Catch the GET params. The URL must be formated like this :
+	// http://www.mykiwiirc.url:7778/?autoconnect=1&nick=azer&password=&channel=lybby&age=&gender=U&location=
+	$('#server_select_nick').val(getQueryVariable('nick'));
+	$('#server_select_age').val(getQueryVariable('age'));
+	$('#server_select_gender').val(getQueryVariable('gender'));
+	$('#server_select_location').val(getQueryVariable('location'));
+	$('#server_select_channel').val('#'+getQueryVariable('channel'));
+	$('#server_select_password').val(getQueryVariable('password'));
+	
+	if (getQueryVariable('autoconnect') == 1) {
+		$('.server_details button').click();
+	}
+</script> 
