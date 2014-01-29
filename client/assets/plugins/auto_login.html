@@ -7,7 +7,7 @@
 		autoconnect = getQueryVariable('autoconnect');
 	
 	if(nick != '') $('#server_select_nick').val(nick);
-	if(channel != '') $('#server_select_channel').val('#'+channel);
+	if(channel != '' && channel != undefined) $('#server_select_channel').val('#'+channel);
 	if(password != '') $('#server_select_password').val(password);
 	
 	// If rich_nicklist is enabled, get the specific params
