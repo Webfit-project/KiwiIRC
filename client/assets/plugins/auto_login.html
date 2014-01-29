@@ -11,7 +11,7 @@
 	if(password != '') $('#server_select_password').val(password);
 	
 	// If rich_nicklist is enabled, get the specific params
-	if (_kiwi.global.settings.get('rich_nicklist') === true) {
+	if (kiwi.settings.get('rich_nicklist') === true) {
 		var age = getQueryVariable('age'),
 			gender = getQueryVariable('gender'),
 			city = getQueryVariable('location');
