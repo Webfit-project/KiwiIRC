@@ -483,6 +483,12 @@ ul.icons li [class*=" icon-"] {
 .icon-sort:before                 { content: "\f0dc"; }
 .icon-sort-down:before            { content: "\f0dd"; }
 .icon-sort-up:before              { content: "\f0de"; }
+.icon-sort-alpha-asc:before       { content: "\f15d"; }
+.icon-sort-alpha-desc:before      { content: "\f15e"; }
+.icon-sort-amount-asc:before      { content: "\f160"; }
+.icon-sort-amount-desc:before     { content: "\f161"; }
+.icon-sort-numeric-asc:before     { content: "\f162"; }
+.icon-sort-numeric-desc:before    { content: "\f163"; }
 
 .icon-envelope-alt:before         { content: "\f0e0"; }
 .icon-linkedin:before             { content: "\f0e1"; }

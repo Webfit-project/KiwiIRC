@@ -209,6 +209,7 @@ _kiwi.view.Channel = _kiwi.view.Panel.extend({
             }
         }).apply(this);
 
+        // TODO : fix auto-scrolling in chanlist
         this.scrollToBottom();
 
         // Make sure our DOM isn't getting too large (Acts as scrollback)

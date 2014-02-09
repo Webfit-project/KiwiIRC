@@ -14,355 +14,355 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: Kiwi\n"
-"Language: tr\n"
+"Language: cs\n"
 
 #: client/assets/src/applets/chanlist.js
 msgid "client_applets_chanlist_channelname"
-msgstr "Kanal Adı"
+msgstr "Jméno kanálu"
 
 #: 
 msgid "client_applets_chanlist_users"
-msgstr "Kullanıcılar"
+msgstr "Uživatelé"
 
 #: 
 msgid "client_applets_chanlist_topic"
-msgstr "Başlık"
+msgstr "Téma"
 
 #: 
 msgid "client_applets_chanlist_channellist"
-msgstr "Kanal Listesi"
+msgstr "Seznam kanálů"
 
 #: client/assets/src/applets/scripteditor.js
 msgid "client_applets_scripteditor_save"
-msgstr "Kaydet"
+msgstr "Uložit"
 
 #: 
 msgid "client_applets_scripteditor_error"
-msgstr "Script hatası. %s"
+msgstr "Chyba skriptu. %s"
 
 #: 
 msgid "client_applets_scripteditor_saved"
-msgstr "Script kaydedildi ve şu anda aktif"
+msgstr "Váš skript byl uložen a je nyní aktivní"
 
 #: 
 msgid "client_applets_scripteditor_title"
-msgstr "Script Editörü"
+msgstr "Editor skriptů"
 
 #: client/assets/src/applets/settings.js
 msgid "client_applets_settings_channelview_tabs"
-msgstr "Sekmeler"
+msgstr "Karty"
 
 #: 
 msgid "client_applets_settings_channelview_list"
-msgstr "Liste"
+msgstr "Seznam"
 
 #: 
 msgid "client_applets_settings_channelview_list_notice"
-msgstr "çok sayıda kanal için"
+msgstr "pro velké množství kanálů"
 
 #: 
 msgid "client_applets_settings_notification_joinpart"
-msgstr "Giriş/çıkış kanal uyarıları"
+msgstr "Oznámení o vstoupení/odejítí"
 
 #: 
 msgid "client_applets_settings_timestamp"
-msgstr "Zaman damgaları"
+msgstr "Časové značky"
 
 #: 
 msgid "client_applets_settings_notification_sound"
-msgstr "Ses uyarılarını kapat"
+msgstr "Ztlumit zvukové oznámení"
 
 #: 
 msgid "client_applets_settings_history_length"
-msgstr "Konuşma geçmişinde gösterilecek mesaj sayısı"
+msgstr "zpráv v historii"
 
 #: 
 msgid "client_applets_settings_default_client"
-msgstr "Varsayılan IRC istemcisi"
+msgstr "Výchozí IRC klient"
 
 #: 
 msgid "client_applets_settings_default_client_enable"
-msgstr "Kiwi'yi varsayılan IRC istemcim yap"
+msgstr "Nastavit Kiwi jako můj výchozí IRC klient"
 
 #: 
 msgid "client_applets_settings_locale_restart_needed"
-msgstr "Not: Değişiklikler sayfayı yenilediğinizde gerçekleşecektir"
+msgstr "Poznámka: Změny se projeví po obnovení stránky"
 
 #: 
 msgid "client_applets_settings_default_client_notice"
-msgstr "Not: Eğer bir şey olmazsa Chrome veya benzeri tarayıcı kullanıcılarının %s üzerinden ayarlarını kontrol etmeleri gerekebilir"
+msgstr "Poznámka: Uživatelé Chrome nebo Chromia budou muset zkontrolovat nastavení na %s, pokud se nic nestane"
 
 #: 
 msgid "client_applets_settings_title"
-msgstr "Ayarlar"
+msgstr "Nastavení"
 
 #: client/assets/src/models/applet.js
 msgid "client_models_applet_unknown"
-msgstr "Bilinmeyen Applet"
+msgstr "Neznámý applet"
 
 #: 
 msgid "client_models_applet_loading"
-msgstr "Yükleniyor..."
+msgstr "Načítám..."
 
 #: 
 msgid "client_models_applet_notfound"
-msgstr "Bulunamadı"
+msgstr "Nenalezen"
 
 #: client/assets/src/models/application.js
 msgid "client_models_application_reconnecting"
-msgstr "Bağlantınız koptu. Yeniden bağlanılıyor"
+msgstr "Byl jste odpojen. Pokouším se o znovupřipojení"
 
 #: 
 msgid "client_models_application_reconnect_in_x_seconds"
-msgstr "Bağlantınız koptu. %d saniye içinde tekrar bağlanılacak"
+msgstr "Byl jste odpojen. Pokouším se o znovupřipojení za %d sekund"
 
 #: 
 msgid "client_models_application_reconnect_successfully"
-msgstr "Tekrar bağlandınız"
+msgstr "Vše je v pořádku, znovu jste připojen"
 
 #: 
 msgid "client_models_application_settings_saved"
-msgstr "Ayarlar kaydedildi"
+msgstr "Nastavení byla uložena"
 
 #: 
 msgid "client_models_application_ignore_title"
-msgstr "Engellenen rumuzlar"
+msgstr "Ignorované přezdívky"
 
 #: 
 msgid "client_models_application_ignore_none"
-msgstr "Hiç kimse engellenmiyor"
+msgstr "Nikoho neignorujete"
 
 #: 
 msgid "client_models_application_ignore_nick"
-msgstr "%s engelleniyor"
+msgstr "Ignoruji %s"
 
 #: 
 msgid "client_models_application_ignore_stop_notice"
-msgstr "Engelini kaldırmak istediğiniz rumuzu belirtin"
+msgstr "Zadejte nick, který chcete ignorovat"
 
 #: 
 msgid "client_models_application_ignore_stopped"
-msgstr "%s rumuzunun engeli kaldırıldı"
+msgstr "Přestávám ignorovat %s"
 
 #: 
 msgid "client_models_application_applet_notfound"
-msgstr "\"%s\" diye bir Applet yok"
+msgstr "Applet \"%s\" neexistuje"
 
 #: 
 msgid "client_models_application_encoding_changed"
-msgstr "Kodlama %s olarak değiştirildi"
+msgstr "Kódování změněno na %s"
 
 #: 
 msgid "client_models_application_encoding_invalid"
-msgstr "%s geçerli bir kodlama türü değil"
+msgstr "%s není platným kódováním"
 
 #: 
 msgid "client_models_application_encoding_notspecified"
-msgstr "Kodlama türü belirtilmedi"
+msgstr "Kódování nebylo zadáno"
 
 #: 
 msgid "client_models_application_encoding_usage"
-msgstr "Kullanımı: /encoding [YENİ-KODLAMA]"
+msgstr "Použití: /encoding [NEW-ENCODING]"
 
 #: 
 msgid "client_models_application_connection_create"
-msgstr "Yeni Bağlantı"
+msgstr "Nové připojení"
 
 #: 
 msgid "client_models_application_connection_connecting"
-msgstr "%s:%s adresine bağlanılıyor..."
+msgstr "Připojuji k %s:%s..."
 
 #: 
 msgid "client_models_application_connection_error"
-msgstr "%s:%s (%s) adresine bağlanırken hata oluştu"
+msgstr "Chyba připojení k %s:%s (%s)"
 
 #: client/assets/src/models/channel.js
 msgid "client_models_channel_join"
-msgstr "%s kanala girdi"
+msgstr "%s přišel do místnosti"
 
 #: 
 msgid "client_models_channel_quit"
-msgstr "%s sunucudan ayrıldı %s"
+msgstr "%s se odpojil %s"
 
 #: 
 msgid "client_models_channel_kicked"
-msgstr "%s kanaldan %s tarafından atıldı %s"
+msgstr "%s byl vyhozen %s %s"
 
 #: 
 msgid "client_models_channel_selfkick"
-msgstr "Kanaldan %s tarafından atıldınız %s"
+msgstr "Byl jste vyhozen %s %s"
 
 #: 
 msgid "client_models_channel_part"
-msgstr "%s kanaldan ayrıldı %s"
+msgstr "%s odešel %s"
 
 #: client/assets/src/models/network.js
 msgid "client_models_network_channel_invalid_name"
-msgstr "%s geçerli bir kanal adı değil"
+msgstr "%s není platným názvem kanálu"
 
 #: 
 msgid "client_models_network_disconnected"
-msgstr "IRC ağı ile bağlantınız kesildi"
+msgstr "Odpojen od sítě IRC"
 
 #: 
 msgid "client_models_network_nickname_changed"
-msgstr "%s rumuzunu %s olarak değiştirdi"
+msgstr "%s je nyní znám jako %s"
 
 #: 
 msgid "client_models_network_topic"
-msgstr "Başlık %s tarafından %s tarihinde ayarlandı"
+msgstr "Téma nastavil %s v %s"
 
 #: 
 msgid "client_models_network_selfmode"
-msgstr "%s mod ayarladı: %s"
+msgstr "%s nastavuje mód %s"
 
 #: 
 msgid "client_models_network_mode"
-msgstr "%s mod ayarladı: %s"
+msgstr "%s nastavil mód %s"
 
 #: 
 msgid "client_models_network_channels"
-msgstr "Kanallar: %s"
+msgstr "Kanály: %s"
 
 #: 
 msgid "client_models_network_server"
-msgstr "Bağlanılan sunucu: %s %s"
+msgstr "Připojen k serveru: %s %s"
 
 #: 
 msgid "client_models_network_idle_and_signon"
-msgstr "Boşta olma süresi %s, giriş zamanı %s "
+msgstr "Neaktivní již %s, připojen %s"
 
 #: 
 msgid "client_models_network_away"
-msgstr "Dışarda: %s"
+msgstr "Pryč: %s"
 
 #: 
 msgid "client_models_network_idle"
-msgstr "Boşta olma süresi %s"
+msgstr "Neaktivní již %s"
 
 #: 
 msgid "client_models_network_nickname_notfound"
-msgstr "Öyle bir rumuz yok"
+msgstr "Takový nick neexistuje"
 
 #: 
 msgid "client_models_network_banned"
-msgstr "%s kanalından banlandınız. %s"
+msgstr "V %s jste zabanován. %s"
 
 #: 
 msgid "client_models_network_channel_badkey"
-msgstr "%s için yanlış kanal şifresi girdiniz"
+msgstr "Špatný klíč kanálu pro %s"
 
 #: 
 msgid "client_models_network_channel_inviteonly"
-msgstr "%s kanalına sadece davet edilenler girebilir"
+msgstr "%s je pouze na pozvání."
 
 #: 
 msgid "client_models_network_channel_limitreached"
-msgstr "%s kanalı dolu."
+msgstr "%s je plný."
 
 #: 
 msgid "client_models_network_nickname_alreadyinuse"
-msgstr "\"%s\" zaten kullanımda. Lütfen yeni bir rumuz seçin"
+msgstr "Přezdívka \"%s\" se již používá. Prosím, zvolte si jinou"
 
 #: 
 msgid "client_models_network_badpassword"
-msgstr "Yanlış şifre girdiniz"
+msgstr "Zadáno nesprávné heslo"
 
 #: client/assets/src/views/application.js
 msgid "client_views_application_close_notice"
-msgstr "Bu bütün KiwiIRC konuşmalarını kapatacak. Bu pencereyi kapatmak istediğinize emin misiniz ?"
+msgstr "Tímto ukončíte veškeré konverzace. Skutečně chcete zavřít toto okno?"
 
 #: client/assets/src/views/channel.js
 msgid "client_views_channel_joining"
-msgstr "Kanala giriliyor..."
+msgstr "Připojuji ke kanálu.."
 
 #: 
 msgid "client_views_channel_topic"
-msgstr "%s kanalının başlığı: %s"
+msgstr "Téma pro %s je: %s"
 
 #: client/assets/src/views/mediamessage.js
 msgid "client_views_mediamessage_close"
-msgstr "Görseli kapat"
+msgstr "Zavřít média"
 
 #: 
 msgid "client_views_mediamessage_notfound"
-msgstr "Bulunamadı"
+msgstr "Nenalezeno"
 
 #: 
 msgid "client_views_mediamessage_load_tweet"
-msgstr "Tweet yükleniyor"
+msgstr "Načítám tweet"
 
 #: 
 msgid "client_views_mediamessage_load_image"
-msgstr "Görüntü yükleniyor"
+msgstr "Načítám obrázek"
 
 #: 
 msgid "client_views_mediamessage_load_reddit"
-msgstr "Reddit konusu yükleniyor"
+msgstr "Načítám thread Redditu"
 
 #: 
 msgid "client_views_mediamessage_load_gist"
-msgstr "Gist yükleniyor"
+msgstr "Načítám gist"
 
 #: client/assets/src/views/nickchangegbox.js
 msgid "client_views_nickchangebox_new"
-msgstr "Yeni rumuz"
+msgstr "Nová přezdívka"
 
 #: 
 msgid "client_views_nickchangebox_change"
-msgstr "Değiştir"
+msgstr "Změnit"
 
 #: 
 msgid "client_views_nickchangebox_cancel"
-msgstr "İptal"
+msgstr "Storno"
 
 #: client/assets/src/views/panel.js
 msgid "client_views_panel_activity"
-msgstr "İnsanlar konuşuyor!"
+msgstr "Lidé mluví!"
 
 #: client/assets/src/views/serverselect.js
 msgid "client_views_serverselect_form_title"
-msgstr "Bir rumuz düşünün..."
+msgstr "Vymyslete si přezdívku..."
 
 #: 
 msgid "client_views_serverselect_nickname"
-msgstr "Rumuz"
+msgstr "Přezdívka"
 
 #: 
 msgid "client_views_serverselect_enable_password"
-msgstr "Şifrem var"
+msgstr "Mám heslo"
 
 #: 
 msgid "client_views_serverselect_password"
-msgstr "Şifre"
+msgstr "Heslo"
 
 #: 
 msgid "client_views_serverselect_channel"
-msgstr "Kanal"
+msgstr "Kanál"
 
 #: 
 msgid "client_views_serverselect_channelkey"
-msgstr "Kanal şifresi"
+msgstr "Klíč ke kanálu"
 
 #: 
 msgid "client_views_serverselect_channelkey_required"
-msgstr "Kanal şifreli"
+msgstr "Kanál vyžaduje klíč"
 
 #: 
 msgid "client_views_serverselect_key"
-msgstr "Şifre"
+msgstr "Klíč"
 
 #: 
 msgid "client_views_serverselect_connection_start"
-msgstr "Başlat..."
+msgstr "Spustit..."
 
 #: 
 msgid "client_views_serverselect_server_and_network"
-msgstr "Sunucu ve ağ"
+msgstr "Server a síť"
 
 #: 
 msgid "client_views_serverselect_server"
-msgstr "Sunucu"
+msgstr "Server"
 
 #: 
 msgid "client_views_serverselect_port"
@@ -370,43 +370,43 @@ msgstr "Port"
 
 #: 
 msgid "client_views_serverselect_poweredby"
-msgstr "Kiwi IRC tarafından desteklenmektedir"
+msgstr "Powered by Kiwi IRC"
 
 #: 
 msgid "client_views_serverselect_nickname_error_empty"
-msgstr "İlk önce bir rumuz seçin!"
+msgstr "Nejprve si zvolte přezdívku!"
 
 #: 
 msgid "client_views_serverselect_connection_successfully"
-msgstr "Bağlandı"
+msgstr "Připojen"
 
 #: 
 msgid "client_views_serverselect_connection_trying"
-msgstr "Bağlanıyor..."
+msgstr "Připojuji.."
 
 #: 
 msgid "client_views_serverselect_nickname_error_alreadyinuse"
-msgstr "Rumuz kullanımda"
+msgstr "Přezdívka už je obsazena"
 
 #: 
 msgid "client_views_serverselect_nickname_invalid"
-msgstr "Hatalı rumuz"
+msgstr "Špatná přezdívka"
 
 #: 
 msgid "client_views_serverselect_password_incorrect"
-msgstr "Yanlış şifre"
+msgstr "Špatné heslo"
 
 #: 
 msgid "client_views_serverselect_connection_error"
-msgstr "Bağlantı hatası"
+msgstr "Problém s připojením"
 
 #: 
 msgid "client_views_serverselect_server_notfound"
-msgstr "Sunucu bulunamadı"
+msgstr "Server nenalezen"
 
 #: 
 msgid "client_views_serverselect_connection_refused"
-msgstr "Bağlantı reddedildi"
+msgstr "Připojení bylo odmítnuto"
 
 #: client/assets/src/views/userbox.js
 msgid "client_views_userbox_op"
@@ -414,7 +414,7 @@ msgstr "Op"
 
 #: 
 msgid "client_views_userbox_deop"
-msgstr "De-op"
+msgstr "Odeber Op"
 
 #: 
 msgid "client_views_userbox_voice"
@@ -422,7 +422,7 @@ msgstr "Voice"
 
 #: 
 msgid "client_views_userbox_devoice"
-msgstr "De-voice"
+msgstr "Odeber Voice"
 
 #: 
 msgid "client_views_userbox_kick"
@@ -434,15 +434,15 @@ msgstr "Ban"
 
 #: 
 msgid "client_views_userbox_query"
-msgstr "Mesaj"
+msgstr "Zpráva"
 
 #: 
 msgid "client_views_userbox_whois"
-msgstr "Bilgi"
+msgstr "Info"
 
 #: 
 msgid "client_views_userbox_slap"
-msgstr "Tokatla!"
+msgstr "Plesk!"
 
 #: 
 msgid "client_views_serverselect_ssl"
@@ -450,43 +450,43 @@ msgstr "SSL"
 
 #: 
 msgid "client_models_application_jumpserver_prepare"
-msgstr "5 dakika içerisinde yeniden bağlanmış olacaksınız. Hazır olun!"
+msgstr "Za 5 minut budete znovu připojeni a přihlášeni ke kanálu. Připravte se!"
 
 #: 
 msgid "client_models_application_jumpserver_reconnect"
-msgstr "Güvenli şekilde yeniden bağlanılıyor..."
+msgstr "Znovu provádím bezpečné připojení.."
 
 #: 
 msgid "client_applets_settings_html5_notifications"
-msgstr "Desktop notifications"
+msgstr "Oznámení na ploše"
 
 #: 
 msgid "client_applets_settings_enable_notifications"
-msgstr "Enable notifications"
+msgstr "Zapnout oznámení"
 
 #: 
 msgid "client_applets_settings_emoticons"
-msgstr "Show emoticons"
+msgstr "Zobrazit smajlíky"
 
 #: 
 msgid "client_applet_about"
-msgstr "About Kiwi"
+msgstr "O Kiwi"
 
 #: 
 msgid "client_applet_about_homepage"
-msgstr "Project homepage"
+msgstr "Stránka projektu"
 
 #: 
 msgid "client_applet_about_link_channel"
-msgstr "Link to this channel"
+msgstr "Odkaz na tento kanál"
 
 #: 
 msgid "client_applet_about_share_channel"
-msgstr "Share this channel"
+msgstr "Sdílejte tento kanál"
 
 #: 
 msgid "client_applet_fav_my_networks"
-msgstr "My networks"
+msgstr "Mé sítě"
 
 #: 
 msgid "client_applet_fav_networks"
@@ -494,39 +494,15 @@ msgstr "Favourite networks"
 
 #: 
 msgid "client_applet_fav_add"
-msgstr "Add network"
+msgstr "Přidat síť"
 
 #: 
 msgid "client_applet_fav_save"
-msgstr "Save network"
+msgstr "Uložit síť"
 
 #: 
 msgid "client_applet_fav_delete"
-msgstr "Delete network"
-
-#: client/assets/src/views/member.js
-msgid "client_views_member_years_old"
-msgstr "years old"
-
-#: client/assets/src/views/member.js
-msgid "client_views_member_gender_M"
-msgstr "Man"
-
-#: client/assets/src/views/member.js
-msgid "client_views_member_gender_F"
-msgstr "Woman"
-
-#: client/assets/src/views/member.js
-msgid "client_views_member_gender_U"
-msgstr "Unknown"
-
-#: client/assets/src/views/member.js
-msgid "client_views_member_ircop"
-msgstr "IRC operator"
-
-#: client/assets/src/views/member.js
-msgid "client_views_member_away"
-msgstr "Away"
+msgstr "Smazat síť"
 
 #: 
 msgid "client_applets_settings_notification_count_all_activity"

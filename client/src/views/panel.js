@@ -100,6 +100,7 @@ _kiwi.view.Panel = Backbone.View.extend({
     // Scroll to the bottom of the panel
     scrollToBottom: function (force_down) {
         // If this isn't the active panel, don't scroll
+        // TODO : fix auto-scrolling in chanlist
         if (this.model !== _kiwi.app.panels().active) return;
 
         // Don't scroll down if we're scrolled up the panel a little
