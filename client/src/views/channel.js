@@ -58,7 +58,8 @@ _kiwi.view.Channel = _kiwi.view.Panel.extend({
             nick_colour_hex, nick_hex, is_highlight, msg_css_classes = '',
             time_difference,
             sb = this.model.get('scrollback'),
-            prev_msg = sb[sb.length-2];
+            prev_msg = sb[sb.length-2],
+            network;
 
         // Nick highlight detecting
         if ((new RegExp('(^|\\W)(' + escapeRegex(_kiwi.app.connections.active_connection.get('nick')) + ')(\\W|$)', 'i')).test(msg.msg)) {
@@ -70,10 +71,12 @@ _kiwi.view.Channel = _kiwi.view.Panel.extend({
         msg.msg =  $('<div />').text(msg.msg).html();
 
         // Make the channels clickable
-        re = new RegExp('(?:^|\\s)([' + escapeRegex(_kiwi.gateway.get('channel_prefix')) + '][^ ,\\007]+)', 'g');
-        msg.msg = msg.msg.replace(re, function (match) {
-            return '<a class="chan" data-channel="' + match.trim() + '">' + match + '</a>';
-        });
+        if ((network = this.model.get('network'))) {
+            re = new RegExp('(?:^|\\s)([' + escapeRegex(network.get('channel_prefix')) + '][^ ,\\007]+)', 'g');
+            msg.msg = msg.msg.replace(re, function (match) {
+                return '<a class="chan" data-channel="' + match.trim() + '">' + match + '</a>';
+            });
+        }
 
 
         // Parse any links found
@@ -209,8 +212,7 @@ _kiwi.view.Channel = _kiwi.view.Panel.extend({
             }
         }).apply(this);
 
-        // TODO : fix auto-scrolling in chanlist
-        this.scrollToBottom();
+        if(this.model.isActive()) this.scrollToBottom();
 
         // Make sure our DOM isn't getting too large (Acts as scrollback)
         this.msg_count++;
@@ -238,22 +240,19 @@ _kiwi.view.Channel = _kiwi.view.Panel.extend({
     nickClick: function (event) {
         var nick = $(event.currentTarget).text(),
             members = this.model.get('members'),
+            are_we_an_op = !!members.getByNick(_kiwi.app.connections.active_connection.get('nick')).get('is_op'),
             member, query, userbox, menubox;
 
         if (members) {
             member = members.getByNick(nick);
             if (member) {
                 userbox = new _kiwi.view.UserBox();
-                userbox.member = member;
-                userbox.channel = this.model;
-
-                // Hide the op related items if we're not an op
-                if (!members.getByNick(_kiwi.app.connections.active_connection.get('nick')).get('is_op')) {
-                    userbox.$el.children('.if_op').remove();
-                }
+                userbox.setTargets(member, this.model);
+                userbox.displayOpItems(are_we_an_op);
 
                 menubox = new _kiwi.view.MenuBox(member.get('nick') || 'User');
                 menubox.addItem('userbox', userbox.$el);
+                menu.showFooter(false);
                 menubox.show();
 
                 // Position the userbox + menubox
@@ -279,12 +278,9 @@ _kiwi.view.Channel = _kiwi.view.Panel.extend({
 
 
     chanClick: function (event) {
-        if (event.target) {
-            _kiwi.gateway.join(null, $(event.target).data('channel'));
-        } else {
-            // IE...
-            _kiwi.gateway.join(null, $(event.srcElement).data('channel'));
-        }
+        var target = (event.target) ? $(event.target).data('channel') : $(event.srcElement).data('channel');
+
+        _kiwi.app.connections.active_connection.gateway.join(target);
     },
 
 
