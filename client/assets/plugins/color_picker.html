@@ -13,6 +13,9 @@
        width: 80px;
        position: absolute;
    }
+	#kiwi .controlbox .input_tools .tool #color-picker {
+		margin: 0 -1em;
+	}
 </style>
 
 <div id="color-picker" class="tool">
@@ -47,7 +50,8 @@
 			$colors = $icon.find('#color-box');
 
 		var setColorsPosition = function() {
-			$colors.css('top', (-($icon.position().top + $icon.height() + 80))+'px');
+			$colors.css('top', (-($icon.position().top + $icon.height() + 90))+'px');
+			$colors.css('left', ('-20px'));
 		};
 	
 		$colors.hide();
