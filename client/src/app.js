@@ -109,11 +109,11 @@ _kiwi.global = {
     },
 
     // Entry point to start the kiwi application
-    init: function (opts, callback) {
+    start: function (opts, callback) {
         var continueStart, locale, igniteTextTheme, text_theme;
         opts = opts || {};
 
-        continueInit = function (locale, s, xhr) {
+        continueStart = function (locale, s, xhr) {
             if (locale) {
                 _kiwi.global.i18n = new Jed(locale);
             } else {
@@ -123,7 +123,7 @@ _kiwi.global = {
             _kiwi.app = new _kiwi.model.Application(opts);
 
             // Start the client up
-            _kiwi.app.initializeInterfaces();
+            _kiwi.app.start();
 
             // Now everything has started up, load the plugin manager for third party plugins
             _kiwi.global.plugins = new _kiwi.model.PluginManager();
@@ -146,9 +146,9 @@ _kiwi.global = {
 
         locale = _kiwi.global.settings.get('locale');
         if (!locale) {
-            $.getJSON(opts.base_path + '/assets/locales/magic.json', continueInit);
+            $.getJSON(opts.base_path + '/assets/locales/magic.json', continueStart);
         } else {
-            $.getJSON(opts.base_path + '/assets/locales/' + locale + '.json', continueInit);
+            $.getJSON(opts.base_path + '/assets/locales/' + locale + '.json', continueStart);
         }
 
         text_theme = opts.text_theme;
@@ -157,15 +157,6 @@ _kiwi.global = {
         } else {
             $.getJSON(opts.base_path + '/assets/text_themes/' + text_theme + '.json', igniteTextTheme);
         }
-    },
-
-    start: function() {
-        _kiwi.app.showStartup();
-    },
-
-    // Allow plugins to change the startup applet
-    registerStartupApplet: function(startup_applet_name) {
-        _kiwi.app.startup_applet_name = startup_applet_name;
     },
 
     /**
