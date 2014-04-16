@@ -49,7 +49,13 @@
             *   The user prefixes for channel owner/admin/op/voice etc. on this network
             *   @type   Array
             */
-            user_prefixes: ['~', '&', '@', '+'],
+            user_prefixes: [
+                {symbol: '~', mode: 'q'},
+                {symbol: '&', mode: 'a'},
+                {symbol: '@', mode: 'o'},
+                {symbol: '%', mode: 'h'},
+                {symbol: '+', mode: 'v'}
+            ],
 
             /**
             *   List of nicks we are ignoring
@@ -167,10 +173,11 @@
 
                 // Trim any whitespace off the name
                 channel_name = channel_name.trim();
-                
+
                 // Add channel_prefix in front of the first channel if missing
-                if (channel_name[0] != that.get('channel_prefix')) {
-                    channel_name = that.get('channel_prefix') + channel_name;
+                if (that.get('channel_prefix').indexOf(channel_name[0]) === -1) {
+                    // Could be many prefixes but '#' is highly likely the required one
+                    channel_name = '#' + channel_name;
                 }
 
                 // Check if we have the panel already. If not, create it
@@ -301,7 +308,12 @@
         members = c.get('members');
         if (!members) return;
 
-        user = new _kiwi.model.Member({nick: event.nick, ident: event.ident, hostname: event.hostname});
+        user = new _kiwi.model.Member({
+            nick: event.nick,
+            ident: event.ident,
+            hostname: event.hostname,
+            user_prefixes: this.get('user_prefixes')
+        });
         members.add(user, {kiwi: event});
     }
 
@@ -461,7 +473,7 @@
 
 
     function onNotice(event) {
-        var panel, channel_name;
+        var panel, active_panel, channel_name;
 
         // An ignored user? don't do anything with it
         if (!event.from_server && event.nick && this.isNickIgnored(event.nick)) {
@@ -491,9 +503,13 @@
 
         panel.addMsg('[' + (event.nick||'') + ']', event.msg, 'notice', {time: event.time});
 
-        // Show this notice to the active panel if it didn't have a set target
-        if (!event.from_server && panel === this.panels.server && _kiwi.app.panels().active !== this.panels.server)
-            _kiwi.app.panels().active.addMsg('[' + (event.nick||'') + ']', event.msg, 'notice', {time: event.time});
+        // Show this notice to the active panel if it didn't have a set target, but only in an active channel or query window
+        active_panel = _kiwi.app.panels().active;
+
+        if (!event.from_server && panel === this.panels.server && active_panel !== this.panels.server) {
+            if (active_panel.isChannel() || active_panel.isQuery())
+                active_panel.addMsg('[' + (event.nick||'') + ']', event.msg, 'notice', {time: event.time});
+        }
     }
 
 
@@ -570,15 +586,19 @@
 
 
     function onUserlist(event) {
-        var channel;
-        channel = this.panels.getByName(event.channel);
+        var that = this,
+            channel = this.panels.getByName(event.channel);
 
         // If we didn't find a channel for this, may aswell leave
         if (!channel) return;
 
         channel.temp_userlist = channel.temp_userlist || [];
         _.each(event.users, function (item) {
-            var user = new _kiwi.model.Member({nick: item.nick, modes: item.modes});
+            var user = new _kiwi.model.Member({
+                nick: item.nick,
+                modes: item.modes,
+                user_prefixes: that.get('user_prefixes')
+            });
             channel.temp_userlist.push(user);
         });
     }
@@ -602,7 +622,6 @@
 
 
     function onBanlist(event) {
-        console.log('banlist', event);
         var channel = this.panels.getByName(event.channel);
         if (!channel)
             return;
@@ -758,7 +777,7 @@
 
             member = panel.get('members').getByNick(event.nick);
             if (member) {
-                member.set('away', !(!event.trailing));
+                member.set('away', !(!event.reason));
             }
         });
     }
@@ -841,9 +860,6 @@
         if (display_params[0] && display_params[0] == this.get('nick')) {
             display_params.shift();
         }
-
-        if (event.trailing)
-            display_params.push(event.trailing);
 
         this.panels.server.addMsg('', '[' + event.command + '] ' + display_params.join(', ', ''));
     }
