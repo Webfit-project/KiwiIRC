@@ -88,6 +88,7 @@
              */
             this.controlbox = new _kiwi.view.ControlBox({el: $('#kiwi .controlbox')[0]});
             this.bindControllboxCommands(this.controlbox);
+            this.rightbar = new _kiwi.view.RightBar({el: this.view.$('.right_bar')[0]});
 
             this.topicbar = new _kiwi.view.TopicBar({el: this.view.$el.find('.topic')[0]});
 
@@ -111,6 +112,7 @@
 
             _kiwi.global.components.Applet = _kiwi.model.Applet;
             _kiwi.global.components.Panel =_kiwi.model.Panel;
+            _kiwi.global.components.MenuBox = _kiwi.view.MenuBox;
         },
 
 
@@ -191,13 +193,13 @@
 
                     // Mention the disconnection on every channel
                     _kiwi.app.connections.forEach(function(connection) {
-                        connection.panels.server.addMsg('', msg, 'action quit');
+                        connection.panels.server.addMsg('', styleText('quit', {'%T': msg}), 'action quit');
 
                         connection.panels.forEach(function(panel) {
                             if (!panel.isChannel())
                                 return;
 
-                            panel.addMsg('', msg, 'action quit');
+                            panel.addMsg('', styleText('quit', {'%T': msg}), 'action quit');
                         });
                     });
 
@@ -210,7 +212,7 @@
 
                     // Only need to mention the repeating re-connection messages on server panels
                     _kiwi.app.connections.forEach(function(connection) {
-                        connection.panels.server.addMsg('', msg, 'action quit');
+                        connection.panels.server.addMsg('', styleText('quit', {'%T': msg}), 'action quit');
                     });
                 });
 
@@ -226,13 +228,13 @@
 
                     // Mention the re-connection on every channel
                     _kiwi.app.connections.forEach(function(connection) {
-                        connection.panels.server.addMsg('', msg, 'action join');
+                        connection.panels.server.addMsg('', styleText('rejoin', {'%T': msg}), 'action join');
 
                         connection.panels.forEach(function(panel) {
                             if (!panel.isChannel())
                                 return;
 
-                            panel.addMsg('', msg, 'action join');
+                            panel.addMsg('', styleText('rejoin', {'%T': msg}), 'action join');
                         });
                     });
 
@@ -389,13 +391,13 @@
                 }
 
                 // Read the value to the user
-                _kiwi.app.panels().active.addMsg('', setting + ' = ' + _kiwi.global.settings.get(setting).toString());
+                _kiwi.app.panels().active.addMsg('', styleText('set_setting', {'%T': setting + ' = ' + _kiwi.global.settings.get(setting).toString()}));
             };
 
 
             fn_to_bind['command:save'] = function (ev) {
                 _kiwi.global.settings.save();
-                _kiwi.app.panels().active.addMsg('', _kiwi.global.i18n.translate('client_models_application_settings_saved').fetch());
+                _kiwi.app.panels().active.addMsg('', styleText('client_models_application_settings_saved', {'%T': translateText('client_models_application_settings_saved')}));
             };
 
 
@@ -405,7 +407,7 @@
                 // No parameters passed so list them
                 if (!ev.params[1]) {
                     $.each(controlbox.preprocessor.aliases, function (name, rule) {
-                        _kiwi.app.panels().server.addMsg(' ', name + '   =>   ' + rule);
+                        _kiwi.app.panels().server.addMsg(' ', styleText('list_aliases', {'%T': name + '   =>   ' + rule}));
                     });
                     return;
                 }
@@ -437,12 +439,12 @@
                 // No parameters passed so list them
                 if (!ev.params[0]) {
                     if (list.length > 0) {
-                        _kiwi.app.panels().active.addMsg(' ', _kiwi.global.i18n.translate('client_models_application_ignore_title').fetch() + ':');
+                        _kiwi.app.panels().active.addMsg(' ', styleText('client_models_application_ignore_title', {'%T': translateText('client_models_application_ignore_title')}));
                         $.each(list, function (idx, ignored_pattern) {
-                            _kiwi.app.panels().active.addMsg(' ', ignored_pattern);
+                            _kiwi.app.panels().active.addMsg(' ', styleText('ignored_pattern', {'%T': ignored_pattern}));
                         });
                     } else {
-                        _kiwi.app.panels().active.addMsg(' ', _kiwi.global.i18n.translate('client_models_application_ignore_none').fetch());
+                        _kiwi.app.panels().active.addMsg(' ', styleText('client_models_application_ignore_none', {'%T': translateText('client_models_application_ignore_none')}));
                     }
                     return;
                 }
@@ -450,7 +452,7 @@
                 // We have a parameter, so add it
                 list.push(ev.params[0]);
                 this.connections.active_connection.set('ignore_list', list);
-                _kiwi.app.panels().active.addMsg(' ', _kiwi.global.i18n.translate('client_models_application_ignore_nick').fetch(ev.params[0]));
+                _kiwi.app.panels().active.addMsg(' ', styleText('client_models_application_ignore_nick', {'%T': translateText('client_models_application_ignore_nick', [ev.params[0]])}));
             };
 
 
@@ -458,7 +460,7 @@
                 var list = this.connections.active_connection.get('ignore_list');
 
                 if (!ev.params[0]) {
-                    _kiwi.app.panels().active.addMsg(' ', _kiwi.global.i18n.translate('client_models_application_ignore_stop_notice').fetch());
+                    _kiwi.app.panels().active.addMsg(' ', styleText('client_models_application_ignore_stop_notice', {'%T': translateText('client_models_application_ignore_stop_notice')}));
                     return;
                 }
 
@@ -468,7 +470,7 @@
 
                 this.connections.active_connection.set('ignore_list', list);
 
-                _kiwi.app.panels().active.addMsg(' ', _kiwi.global.i18n.translate('client_models_application_ignore_stopped').fetch(ev.params[0]));
+                _kiwi.app.panels().active.addMsg(' ', styleText('client_models_application_ignore_stopped', {'%T': translateText('client_models_application_ignore_stopped', [ev.params[0]])}));
             };
 
 
@@ -528,7 +530,7 @@
 
         if (message) {
             this.connections.active_connection.gateway.msg(panel.get('name'), message);
-            panel.addMsg(_kiwi.app.connections.active_connection.get('nick'), message);
+            panel.addMsg(_kiwi.app.connections.active_connection.get('nick'), styleText('query', {'%T': message}));
         }
 
     }
@@ -541,7 +543,7 @@
         ev.params.shift();
         message = formatToIrcMsg(ev.params.join(' '));
 
-        panel.addMsg(_kiwi.app.connections.active_connection.get('nick'), message);
+        panel.addMsg(_kiwi.app.connections.active_connection.get('nick'), styleText('msg', {'%T': message}));
         this.connections.active_connection.gateway.msg(destination, message);
     }
 
@@ -551,7 +553,7 @@
         }
 
         var panel = _kiwi.app.panels().active;
-        panel.addMsg('', '* ' + _kiwi.app.connections.active_connection.get('nick') + ' ' + ev.params.join(' '), 'action');
+        panel.addMsg('', styleText('action', {'%N': _kiwi.app.connections.active_connection.get('nick'), '%T': ev.params.join(' ')}), 'action');
         this.connections.active_connection.gateway.action(panel.get('name'), ev.params.join(' '));
     }
 
@@ -666,7 +668,7 @@
             if (_kiwi.applets[ev.params[0]]) {
                 panel.load(new _kiwi.applets[ev.params[0]]());
             } else {
-                _kiwi.app.panels().server.addMsg('', _kiwi.global.i18n.translate('client_models_application_applet_notfound').fetch(ev.params[0]));
+                _kiwi.app.panels().server.addMsg('', styleText('client_models_application_applet_notfound', {'%T': translateText('client_models_application_applet_notfound', [ev.params[0]])}));
                 return;
             }
         }
@@ -693,7 +695,7 @@
 
         _kiwi.app.connections.active_connection.gateway.raw('INVITE ' + nick + ' ' + channel);
 
-        _kiwi.app.panels().active.addMsg('', '== ' + nick + ' has been invited to ' + channel, 'action');
+        _kiwi.app.panels().active.addMsg('', styleText('client_models_application_has_been_invited', {'%N': nick, '%T': translateText('client_models_application_has_been_invited', [channel])}), 'action');
     }
 
 
@@ -728,14 +730,14 @@
         if (ev.params[0]) {
             _kiwi.gateway.setEncoding(null, ev.params[0], function (success) {
                 if (success) {
-                    _kiwi.app.panels().active.addMsg('', _kiwi.global.i18n.translate('client_models_application_encoding_changed').fetch(ev.params[0]));
+                    _kiwi.app.panels().active.addMsg('', styleText('client_models_application_encoding_changed', {'%T': translateText('client_models_application_encoding_changed', [ev.params[0]])}));
                 } else {
-                    _kiwi.app.panels().active.addMsg('', _kiwi.global.i18n.translate('client_models_application_encoding_invalid').fetch(ev.params[0]));
+                    _kiwi.app.panels().active.addMsg('', styleText('client_models_application_encoding_invalid', {'%T': translateText('client_models_application_encoding_invalid', [ev.params[0]])}));
                 }
             });
         } else {
-            _kiwi.app.panels().active.addMsg('', _kiwi.global.i18n.translate('client_models_application_encoding_notspecified').fetch());
-            _kiwi.app.panels().active.addMsg('', _kiwi.global.i18n.translate('client_models_application_encoding_usage').fetch());
+            _kiwi.app.panels().active.addMsg('', styleText('client_models_application_encoding_notspecified', {'%T': translateText('client_models_application_encoding_notspecified')}));
+            _kiwi.app.panels().active.addMsg('', styleText('client_models_application_encoding_usage', {'%T': translateText('client_models_application_encoding_usage')}));
         }
     }
 
@@ -797,7 +799,7 @@
         // Use the same nick as we currently have
         nick = _kiwi.app.connections.active_connection.get('nick');
 
-        _kiwi.app.panels().active.addMsg('', _kiwi.global.i18n.translate('client_models_application_connection_connecting').fetch(server, port.toString()));
+        _kiwi.app.panels().active.addMsg('', styleText('client_models_application_connection_connecting', {'%T': translateText('client_models_application_connection_connecting', [server, port.toString()])}));
 
         _kiwi.gateway.newConnection({
             nick: nick,
@@ -807,7 +809,7 @@
             password: password
         }, function(err, new_connection) {
             if (err)
-                _kiwi.app.panels().active.addMsg('', _kiwi.global.i18n.translate('client_models_application_connection_error').fetch(server, port.toString(), err.toString()));
+                _kiwi.app.panels().active.addMsg('', styleText('client_models_application_connection_error', {'%T': translateText('client_models_application_connection_error', [server, port.toString(), err.toString()])}));
         });
     }
 
