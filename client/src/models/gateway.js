@@ -9,81 +9,8 @@ _kiwi.model.Gateway = function () {
         // For ease of access. The socket.io object
         this.socket = this.get('socket');
 
-        this.applyEventHandlers();
-
         // Used to check if a disconnection was unplanned
         this.disconnect_requested = false;
-    };
-
-
-    this.applyEventHandlers = function () {
-        /*
-        kiwi.gateway.on('message:#channel', my_function);
-        kiwi.gateway.on('message:somenick', my_function);
-
-        kiwi.gateway.on('notice:#channel', my_function);
-        kiwi.gateway.on('action:somenick', my_function);
-
-        kiwi.gateway.on('join:#channel', my_function);
-        kiwi.gateway.on('part:#channel', my_function);
-        kiwi.gateway.on('quit', my_function);
-        */
-        var that = this;
-
-        // Some easier handler events
-        this.on('onmsg', function (event) {
-            var source,
-                connection = _kiwi.app.connections.getByConnectionId(event.server),
-                is_pm = (event.channel.toLowerCase() == connection.get('nick').toLowerCase());
-
-            source = is_pm ? event.nick : event.channel;
-
-            that.trigger('message:' + source, event);
-            that.trigger('message', event);
-
-            if (is_pm) {
-                that.trigger('pm:' + source, event);
-                that.trigger('pm', event);
-            }
-        }, this);
-
-
-        this.on('onnotice', function (event) {
-            // The notice towards a channel or a query window?
-            var source = event.target || event.nick;
-
-            this.trigger('notice:' + source, event);
-            this.trigger('notice', event);
-        }, this);
-
-
-        this.on('onaction', function (event) {
-            var source,
-                connection = _kiwi.app.connections.getByConnectionId(event.server),
-                is_pm = (event.channel.toLowerCase() == connection.get('nick').toLowerCase());
-
-            source = is_pm ? event.nick : event.channel;
-
-            that.trigger('action:' + source, event);
-
-            if (is_pm) {
-                that.trigger('action:' + source, event);
-                that.trigger('action', event);
-            }
-        }, this);
-
-
-        this.on('ontopic', function (event) {
-            that.trigger('topic:' + event.channel, event);
-            that.trigger('topic', event);
-        });
-
-
-        this.on('onjoin', function (event) {
-            that.trigger('join:' + event.channel, event);
-            that.trigger('join', event);
-        });
-
     };
 
 
@@ -112,6 +39,7 @@ _kiwi.model.Gateway = function () {
         this.set('kiwi_server', _kiwi.app.kiwi_server);
 
         this.socket = new EngineioTools.ReconnectingSocket(this.get('kiwi_server'), {
+            transports: _kiwi.app.server_settings.transports || ['websocket', 'polling'],
             path: _kiwi.app.get('base_path') + '/transport',
             reconnect_max_attempts: 5,
             reconnect_delay: 2000
@@ -346,15 +274,16 @@ _kiwi.model.Gateway = function () {
         }
 
 
-        if (typeof data.server !== 'undefined') {
-            that.trigger('connection:' + data.server.toString(), {
+        // Trigger the connection specific events (used by Network objects)
+        if (typeof data.connection_id !== 'undefined') {
+            that.trigger('connection:' + data.connection_id.toString(), {
                 event_name: command,
                 event_data: data
             });
         }
 
-        // Trigger the global events (Mainly legacy now)
-        that.trigger('on' + command, data);
+        // Trigger the global events
+        that.trigger(command, data);
     };
 
     /**
@@ -368,7 +297,7 @@ _kiwi.model.Gateway = function () {
             connection_id = _kiwi.app.connections.active_connection.get('connection_id');
 
         var data_buffer = {
-            server: connection_id,
+            connection_id: connection_id,
             data: JSON.stringify(data)
         };
         this.rpc.call('irc', data_buffer, callback);
