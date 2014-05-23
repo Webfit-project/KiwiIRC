@@ -201,9 +201,6 @@ _kiwi.model.Gateway = function () {
     this.parseKiwi = function (command, data) {
         var args;
 
-        this.trigger('kiwi:' + command, data);
-        this.trigger('kiwi', data);
-
         switch (command) {
         case 'connected':
             // Send some info on this client to the server
@@ -217,6 +214,9 @@ _kiwi.model.Gateway = function () {
 
             break;
         }
+
+        this.trigger('kiwi:' + command, data);
+        this.trigger('kiwi', data);
     };
 
     /**
@@ -300,7 +300,6 @@ _kiwi.model.Gateway = function () {
     this.ctcpResponse = function (connection_id, type, target, params, callback) {
         this.ctcp(connection_id, false, type, target, params, callback);
     };
-
 
     /**
     *   @param  {String}    target      The target of the message (e.g. a channel or nick)
@@ -446,7 +445,7 @@ _kiwi.model.Gateway = function () {
 
         this.rpcCall('irc.encoding', connection_id, args, callback);
     };
-    
+
 
     return new (Backbone.Model.extend(this))(arguments);
 };
