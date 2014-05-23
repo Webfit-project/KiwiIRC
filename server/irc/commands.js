@@ -20,6 +20,7 @@ irc_numerics = {
     '266': 'RPL_GLOBALUSERS',
     '301': 'RPL_AWAY',
     '307': 'RPL_WHOISREGNICK',
+    '310': 'RPL_WHOIHELPOP',
     '311': 'RPL_WHOISUSER',
     '312': 'RPL_WHOISSERVER',
     '313': 'RPL_WHOISOPERATOR',
@@ -38,6 +39,7 @@ irc_numerics = {
     '331': 'RPL_NOTOPIC',
     '332': 'RPL_TOPIC',
     '333': 'RPL_TOPICWHOTIME',
+    '335': 'RPL_WHOISBOT',
     '341': 'RPL_INVITING',
     '352': 'RPL_WHOREPLY',
     '353': 'RPL_NAMEREPLY',
@@ -52,6 +54,7 @@ irc_numerics = {
     '376': 'RPL_ENDOFMOTD',
     '378': 'RPL_WHOISHOST',
     '379': 'RPL_WHOISMODES',
+    '396': 'RPL_HOSTCLOACKING',
     '401': 'ERR_NOSUCHNICK',
     '404': 'ERR_CANNOTSENDTOCHAN',
     '405': 'ERR_TOOMANYCHANNELS',
@@ -180,6 +183,20 @@ handlers = {
             nick: command.params[1],
             ident: command.params[2],
             host: command.params[3],
+            msg: command.params[command.params.length - 1]
+        });
+    },
+
+    'RPL_WHOISHELPOP': function (command) {
+        this.irc_connection.emit('user ' + command.params[1] + ' whoishelpop', {
+            nick: command.params[1],
+            msg: command.params[command.params.length - 1]
+        });
+    },
+
+    'RPL_WHOISBOT': function (command) {
+        this.irc_connection.emit('user ' + command.params[1] + ' whoisbot', {
+            nick: command.params[1],
             msg: command.params[command.params.length - 1]
         });
     },
@@ -540,7 +557,7 @@ handlers = {
                 nick: command.nick,
                 ident: command.ident,
                 hostname: command.hostname,
-                channel: command.params[0],
+                target: command.params[0],
                 msg: msg.substring(1, msg.length - 1),
                 time: time
             });
@@ -626,22 +643,19 @@ handlers = {
         if ((msg.charAt(0) === String.fromCharCode(1)) && (msg.charAt(msg.length - 1) === String.fromCharCode(1))) {
             //CTCP request
             if (msg.substr(1, 6) === 'ACTION') {
-                this.irc_connection.clientEvent('action', {
+                namespace = (command.params[0].toLowerCase() === this.irc_connection.nick.toLowerCase()) ?
+                    'user ' + command.nick :
+                    'channel ' + command.params[0];
+
+                this.irc_connection.emit(namespace + ' action', {
                     nick: command.nick,
                     ident: command.ident,
                     hostname: command.hostname,
-                    channel: command.params[0],
+                    target: command.params[0],
                     msg: msg.substring(8, msg.length - 1),
                     time: time
                 });
-            } else if (msg.substr(1, 4) === 'KIWI') {
-                tmp = msg.substring(6, msg.length - 1);
-                namespace = tmp.split(' ', 1)[0];
-                this.irc_connection.clientEvent('kiwi', {
-                    namespace: namespace,
-                    data: tmp.substr(namespace.length + 1),
-                    time: time
-                });
+
             } else if (msg.substr(1, 7) === 'VERSION') {
                 client_info = this.irc_connection.state.client.client_info;
                 version_string = global.build_version;
@@ -652,15 +666,20 @@ handlers = {
                 }
 
                 version_string = 'KiwiIRC (' + version_string + ')';
-
                 this.irc_connection.write('NOTICE ' + command.nick + ' :' + String.fromCharCode(1) + 'VERSION ' + version_string + String.fromCharCode(1));
+
             } else if (msg.substr(1, 6) === 'SOURCE') {
                 this.irc_connection.write('NOTICE ' + command.nick + ' :' + String.fromCharCode(1) + 'SOURCE http://www.kiwiirc.com/' + String.fromCharCode(1));
+
             } else if (msg.substr(1, 10) === 'CLIENTINFO') {
                 this.irc_connection.write('NOTICE ' + command.nick + ' :' + String.fromCharCode(1) + 'CLIENTINFO SOURCE VERSION TIME' + String.fromCharCode(1));
+
             } else {
-                namespace = (command.params[0].toLowerCase() === this.irc_connection.nick.toLowerCase()) ? 'user' : 'channel';
-                this.irc_connection.emit(namespace + ' ' + command.nick + ' ctcp_request', {
+                namespace = (command.params[0].toLowerCase() === this.irc_connection.nick.toLowerCase()) ?
+                    'user ' + command.nick :
+                    'channel ' + command.params[0];
+
+                this.irc_connection.emit(namespace + ' ctcp_request', {
                     nick: command.nick,
                     ident: command.ident,
                     hostname: command.hostname,
@@ -677,7 +696,7 @@ handlers = {
                 nick: command.nick,
                 ident: command.ident,
                 hostname: command.hostname,
-                channel: command.params[0],
+                target: command.params[0],
                 msg: msg,
                 time: time
             });
@@ -824,7 +843,7 @@ handlers = {
     },
 
     ERR_CANNOTSENDTOCHAN: function (command) {
-        this.irc_connection.emit('server ' + this.irc_connection.irc_host.hostname + ' cannot_send_to_chan', {
+        this.irc_connection.emit('server ' + this.irc_connection.irc_host.hostname + ' cannot_send_to_channel', {
             channel: command.params[1],
             reason: command.params[command.params.length - 1]
         });
@@ -999,7 +1018,11 @@ handlers = {
         var params = _.clone(command.params);
         params.shift();
         genericNotice.call(this, command, params.slice(0, -1).join(', ') + ' ' + command.params[command.params.length - 1]);
-    }
+    },
+
+    RPL_HOSTCLOACKING: function (command) {
+        genericNotice.call(this, command, command.params[1] + ' ' + command.params[command.params.length - 1]);
+    },
 };
 
 
@@ -1010,7 +1033,7 @@ function genericNotice (command, msg, is_error) {
     if (typeof is_error !== 'boolean')
         is_error = true;
 
-    this.irc_connection.clientEvent('notice', {
+    this.irc_connection.emit('user ' + command.prefix + ' notice', {
         from_server: true,
         nick: command.prefix,
         ident: '',

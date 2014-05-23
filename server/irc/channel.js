@@ -13,24 +13,25 @@ var IrcChannel = function(irc_connection, name) {
 
     // Listen for events on the IRC connection
     this.irc_events = {
-        join:               onJoin,
-        part:               onPart,
-        kick:               onKick,
-        quit:               onQuit,
-        privmsg:            onMsg,
-        notice:             onNotice,
-        ctcp_request:       onCtcpRequest,
-        ctcp_response:      onCtcpResponse,
-        topic:              onTopic,
-        userlist:           onNicklist,
-        userlist_end:       onNicklistEnd,
-        who_channel:        onChannelWho,
-        who_channel_end:    onChannelWhoEnd,
-        banlist:            onBanList,
-        banlist_end:        onBanListEnd,
-        topicsetby:         onTopicSetBy,
-        mode:               onMode,
-        info:               onChannelInfo
+        join:           onJoin,
+        part:           onPart,
+        kick:           onKick,
+        quit:           onQuit,
+        privmsg:        onMsg,
+        action:         onAction,
+        notice:         onNotice,
+        ctcp_request:   onCtcpRequest,
+        ctcp_response:  onCtcpResponse,
+        topic:          onTopic,
+        userlist:       onNicklist,
+        userlist_end:   onNicklistEnd,
+        banlist:        onBanList,
+        banlist_end:    onBanListEnd,
+        topicsetby:     onTopicSetBy,
+        mode:           onMode,
+        info:           onChannelInfo,
+        who_channel:    onChannelWho,
+        who_channel_end: onChannelWhoEnd,
     };
     EventBinder.bindIrcEvents('channel ' + this.name, this.irc_events, this, irc_connection);
 };
@@ -158,7 +159,28 @@ function onMsg(event) {
             nick: event.nick,
             ident: event.ident,
             hostname: event.hostname,
-            channel: that.name,
+            target: that.name,
+            msg: event.msg,
+            time: event.time
+        });
+    });
+}
+
+
+function onAction(event) {
+    var that = this;
+
+    global.modules.emit('irc action', {
+        channel: this,
+        connection: this.irc_connection,
+        irc_event: event
+    })
+    .done(function() {
+        that.irc_connection.clientEvent('action', {
+            nick: event.nick,
+            ident: event.ident,
+            hostname: event.hostname,
+            target: event.target,
             msg: event.msg,
             time: event.time
         });
