@@ -12,6 +12,7 @@
    #color-picker ul {
        width: 80px;
        position: absolute;
+       
    }
 	#kiwi .controlbox .input_tools .tool #color-picker {
 		margin: 0 -1em;
@@ -21,10 +22,10 @@
 <div id="color-picker" class="tool">
 	<img src="../kiwi/assets/img/color_picker.png">
 	<ul id="color-box">
-		<li data-color="0" style="background-color: #FFFFFF">&nbsp;</li>
+		<li data-color="0" style="background-color: #FFFFFF;border-radius: 5px 0px 0px 0px;"><i class="icon-undo"></i></li>
 		<li data-color="1" style="background-color: #000000">&nbsp;</li>
 		<li data-color="2" style="background-color: #000080">&nbsp;</li>
-		<li data-color="3" style="background-color: #008000">&nbsp;</li>
+		<li data-color="3" style="background-color: #008000;border-radius: 0px 5px 0px 0px;">&nbsp;</li>
 		<li data-color="4" style="background-color: #FF0000">&nbsp;</li>
 		<li data-color="5" style="background-color: #800040">&nbsp;</li>
 		<li data-color="6" style="background-color: #800080">&nbsp;</li>
@@ -33,10 +34,10 @@
 		<li data-color="9" style="background-color: #80FF00">&nbsp;</li>
 		<li data-color="10" style="background-color: #008080">&nbsp;</li>
 		<li data-color="11" style="background-color: #00FFFF">&nbsp;</li>
-		<li data-color="12" style="background-color: #0000FF">&nbsp;</li>
+		<li data-color="12" style="background-color: #0000FF;border-radius: 0px 0px 0px 5px;">&nbsp;</li>
 		<li data-color="13" style="background-color: #FF55FF">&nbsp;</li>
 		<li data-color="14" style="background-color: #808080">&nbsp;</li>
-		<li data-color="16" style="background-color: #C0C0C0">&nbsp;</li>
+		<li data-color="16" style="background-color: #C0C0C0;border-radius: 0px 0px 5px 0px;">&nbsp;</li>
 	</ul>
 </div>
 
@@ -69,7 +70,9 @@
 		$colors.find('li').click(function(e){
 			e.stopPropagation();
 			$this = $(this);
-			$area.css('color', $this.css('background-color'));
+			if ($this.css('background-color') != "rgb(255, 255, 255)") {
+			    $area.css('color', $this.css('background-color'));
+			}
 			selected_color = $this.data('color');
 			$this.parent().hide();
 		});
@@ -77,7 +80,7 @@
 		$area.keydown(function(e){
 			var code = e.keyCode || e.which;
 	
-			 if(code == 13 && selected_color){
+			 if((code == 13 && selected_color) && (code != 1)) {
 				if ($area.val().substr(0, 1) != "/") {
 					$area.val('\x03'+selected_color+$area.val());
 				}
