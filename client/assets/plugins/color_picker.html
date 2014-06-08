@@ -1,28 +1,32 @@
 <style>
-	#color-picker {
-		position: relative;
+	#kiwi .controlbox .input_tools .tool {
+	    display: inline;
+	    float: right;
+	    margin: 0;
+	    position: relative;
+	    width: 13px;
+	}
+	#kiwi .controlbox .input_tools #color-picker {
+		position: absolute;
+		right: 3.5em;
 		top: 3px;
 	}
 	#color-picker li {
        list-style: none;
        float: left;
        width: 20px;
+       height: 20px;
    }
-
    #color-picker ul {
        width: 80px;
-       position: absolute;
-       
+       position: absolute;   
    }
-	#kiwi .controlbox .input_tools .tool #color-picker {
-		margin: 0 -1em;
-	}
 </style>
 
-<div id="color-picker" class="tool">
+<div id="color-picker">
 	<img src="../kiwi/assets/img/color_picker.png">
 	<ul id="color-box">
-		<li data-color="0" style="background-color: #FFFFFF;border-radius: 5px 0px 0px 0px;"><i class="icon-undo"></i></li>
+		<li data-color="0" style="background-color: #FFFFFF;border-radius: 5px 0px 0px 0px;"><i class="icon-undo" style="position: absolute;top:3px;font-size: 15px;left: 1px;"></i></li>
 		<li data-color="1" style="background-color: #000000">&nbsp;</li>
 		<li data-color="2" style="background-color: #000080">&nbsp;</li>
 		<li data-color="3" style="background-color: #008000;border-radius: 0px 5px 0px 0px;">&nbsp;</li>
@@ -70,10 +74,12 @@
 		$colors.find('li').click(function(e){
 			e.stopPropagation();
 			$this = $(this);
-			if ($this.css('background-color') != "rgb(255, 255, 255)") {
+			if($this.data('color') > 1) {
 			    $area.css('color', $this.css('background-color'));
+				selected_color = $this.data('color');
+			} else {
+				selected_color = null;
 			}
-			selected_color = $this.data('color');
 			$this.parent().hide();
 		});
 	
