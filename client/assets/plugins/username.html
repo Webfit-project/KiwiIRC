@@ -1,8 +1,7 @@
 <script>
-var network, cookie, origin, prefix;
+var cookie;
 
-network = kiwi.components.Network();
-// Cookies
+// Cookie functions
 function createCookie(name, value, days) {
     if (days) {
         var date = new Date();
@@ -29,26 +28,30 @@ function eraseCookie(name) {
     createCookie(name, "", -1);
 }
 
+// End cookie functions
+
+
+
+// var network = kiwi.components.Network();
 //network.on('connect', function(event) {
 cookie = readCookie('kiwi_username');
-origin = getQueryVariable('origin');
 
-switch(origin) {
-	case '3':
-		prefix = 'c-';
-		break;
-	case '4':
-		prefix = 'e-';
-		break;
-	default:
-		prefix = 'u-';
-		break;
-}
 
-//console.log(cookie);
+// Create and store the username
 if (cookie == null) {
-    var value =  prefix + randomString(8);
-    createCookie('kiwi_username', value, 30);
+    var prefixes = {'3': 'c-', '4': 'e-'}, // list of EuropNet's source prefixes
+        origin = getQueryVariable('origin');
+
+    if(origin != '') {
+        prefix = prefixes[origin];
+    }
+
+    if(prefix === undefined) {
+        prefix = 'u-';
+    }
+    var username =  prefix + randomString(8);
+    // var value =  prefix + kiwi.connections.active.get('network').get('nick').substring(0, 8);
+    createCookie('kiwi_username', username, 30);
 }
 //});
  </script>
