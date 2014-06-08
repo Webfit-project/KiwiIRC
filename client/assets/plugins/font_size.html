@@ -1,0 +1,93 @@
+<style>
+    #formatMenu {
+        position: absolute;
+        bottom: 1px;
+        right: 10px;
+        display: none;
+    }
+    #decreaseText,
+    #increaseText {
+        border: 1px solid #A1A1A0;
+        border-radius: 6px;
+        color: #A1A1A0;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1.3em;
+        margin: 1px;
+        padding: 0 4px 2px !important;
+    }
+</style>
+<script>
+    var locale_strings,
+        locale,
+        network = kiwi.components.Network();
+
+    locale_strings = {
+        'en': {
+            'reduce_text': 'Reduce text size',
+            'increase_text': 'Increase text size'
+        },
+        'it': {
+            'reduce_text': 'Disminuir texto',
+            'increase_text': 'Aumentar texto'
+        },
+        'fr': {
+            'reduce_text': 'Réduire le texte',
+            'increase_text': 'Agrandir le texte'
+        }
+    }
+    locale = (locale_strings[navigator.language]) ? locale_strings[navigator.language] : locale_strings['en'];
+
+    network.on('connect', function (event) {
+        $('#formatMenu').show();
+    });
+
+    $("div.panels div.panel_container").prepend("<div id='formatMenu'><div id='decreaseText' title='Disminuir texto'>A<sup>-</sup></div><div id='increaseText' title='Aumentar texto'>A<sup>+</sup></div></div>");
+
+
+    var values = [];
+
+    $("#decreaseText").click(function () {
+        var MsgFontSize = $(".messages").css("font-size");
+        var NickFontSize = $("#kiwi .messages .msg .nick").css("font-size");
+        if (MsgFontSize == null) MsgFontSize = 14;
+        if (NickFontSize == null) NickFontSize = "12px";
+        MsgFontSize = parseInt(MsgFontSize);
+        if (MsgFontSize > 14) {
+            MsgFontSize--;
+            $(".messages").css("font-size", MsgFontSize + "px");
+            NickFontSize = NickFontSize.substring(0, 2);
+            NickFontSize = parseInt(NickFontSize);
+            NickFontSize--;
+
+
+            $("#kiwi .messages .msg .nick").css("font-size", NickFontSize + "px");
+            values = [NickFontSize + "px", MsgFontSize + "px"];
+        }
+    });
+
+    $("#increaseText").click(function () {
+        var MsgFontSize = $(".messages").css("font-size");
+        var NickFontSize = $("#kiwi .messages .msg .nick").css("font-size");
+        if (MsgFontSize == null) MsgFontSize = 14;
+        if (NickFontSize == null) NickFontSize = "12px";
+        MsgFontSize = parseInt(MsgFontSize);
+        if (MsgFontSize < 20) {
+            MsgFontSize++;
+            $(".messages").css("font-size", MsgFontSize + "px");
+            NickFontSize = NickFontSize.substring(0, 2);
+            NickFontSize = parseInt(NickFontSize);
+            NickFontSize++;
+
+            $("#kiwi .messages .msg .nick").css("font-size", NickFontSize + "px");
+            values = [NickFontSize + "px", MsgFontSize + "px"];
+        }
+    });
+
+    kiwi.panels.on('active', function (event) {
+        if (values.length > 1) {
+            $(".messages").css("font-size", values[1]);
+            $("#kiwi .panel_container .messages .msg .nick").css("font-size", values[0]);
+        }
+    });
+</script>
