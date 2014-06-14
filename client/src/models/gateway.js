@@ -230,6 +230,21 @@ _kiwi.model.Gateway = function () {
                 event_name: command,
                 event_data: data
             });
+
+            // Some events trigger a more in-depth event name
+            if (command == 'message' && data.type) {
+                that.trigger('connection:' + data.connection_id.toString(), {
+                    event_name: 'message:' + data.type,
+                    event_data: data
+                });
+            }
+
+            if (command == 'channel' && data.type) {
+                that.trigger('connection:' + data.connection_id.toString(), {
+                    event_name: 'channel:' + data.type,
+                    event_data: data
+                });
+            }
         }
 
         // Trigger the global events
@@ -339,11 +354,20 @@ _kiwi.model.Gateway = function () {
     /**
     *   Leaves a channel
     *   @param  {String}    channel     The channel to part
+    *   @param  {String}    message     Optional part message
     *   @param  {Function}  callback    A callback function
     */
-    this.part = function (connection_id, channel, callback) {
+    this.part = function (connection_id, channel, message, callback) {
+        "use strict";
+
+        // The message param is optional, so juggle args if it is missing
+        if (typeof arguments[2] === 'function') {
+            callback = arguments[2];
+            message = undefined;
+        }
         var args = {
-            channel: channel
+            channel: channel,
+            message: message
         };
 
         this.rpcCall('irc.part', connection_id, args, callback);

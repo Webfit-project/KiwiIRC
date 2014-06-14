@@ -56,7 +56,8 @@ function onJoin(event) {
         irc_event: event
     })
     .done(function() {
-        that.irc_connection.clientEvent('join', {
+        that.irc_connection.clientEvent('channel', {
+            type: 'join',
             channel: that.name,
             nick: event.nick,
             ident: event.ident,
@@ -92,7 +93,8 @@ function onPart(event) {
         irc_event: event
     })
     .done(function() {
-        that.irc_connection.clientEvent('part', {
+        that.irc_connection.clientEvent('channel', {
+            type: 'part',
             nick: event.nick,
             ident: event.ident,
             hostname: event.hostname,
@@ -113,7 +115,8 @@ function onKick(event) {
         irc_event: event
     })
     .done(function() {
-        that.irc_connection.clientEvent('kick', {
+        that.irc_connection.clientEvent('channel', {
+            type: 'kick',
             kicked: event.kicked,  // Nick of the kicked
             nick: event.nick, // Nick of the kicker
             ident: event.ident,
@@ -135,7 +138,8 @@ function onQuit(event) {
         irc_event: event
     })
     .done(function() {
-        that.irc_connection.clientEvent('quit', {
+        that.irc_connection.clientEvent('channel', {
+            type: 'quit',
             nick: event.nick,
             ident: event.ident,
             hostname: event.hostname,
@@ -155,7 +159,8 @@ function onMsg(event) {
         irc_event: event
     })
     .done(function() {
-        that.irc_connection.clientEvent('msg', {
+        that.irc_connection.clientEvent('message', {
+            type: 'message',
             nick: event.nick,
             ident: event.ident,
             hostname: event.hostname,
@@ -176,7 +181,8 @@ function onAction(event) {
         irc_event: event
     })
     .done(function() {
-        that.irc_connection.clientEvent('action', {
+        that.irc_connection.clientEvent('message', {
+            type: 'action',
             nick: event.nick,
             ident: event.ident,
             hostname: event.hostname,
@@ -197,7 +203,8 @@ function onNotice(event) {
         irc_event: event
     })
     .done(function() {
-        that.irc_connection.clientEvent('notice', {
+        that.irc_connection.clientEvent('message', {
+            type: 'notice',
             from_server: event.from_server,
             nick: event.nick,
             ident: event.ident,
