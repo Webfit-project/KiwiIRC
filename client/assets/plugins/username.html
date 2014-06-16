@@ -31,20 +31,6 @@ kiwi.plugins.on('loaded', function() {
 
     // End cookie functions
 
-    if(typeof randomString !== 'function') {
-        function randomString(string_length) {
-            var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz",
-                randomstring = '',
-                i,
-                rnum;
-            for (i = 0; i < string_length; i++) {
-                rnum = Math.floor(Math.random() * chars.length);
-                randomstring += chars.substring(rnum, rnum + 1);
-            }
-            return randomstring;
-        }
-    }
-
     // var network = kiwi.components.Network();
     //network.on('connect', function(event) {
     cookie = readCookie('kiwi_username');
@@ -62,7 +48,7 @@ kiwi.plugins.on('loaded', function() {
         if(prefix === undefined) {
             prefix = 'u-';
         }
-        var username =  prefix + randomString(8);
+        var username =  prefix + kiwi.utils.randomString(8);
         // var value =  prefix + kiwi.connections.active.get('network').get('nick').substring(0, 8);
         createCookie('kiwi_username', username, 30);
     }
