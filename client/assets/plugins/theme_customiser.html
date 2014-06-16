@@ -1,0 +1,31 @@
+<script type="text/javascript">
+var origin = getQueryVariable('origin'), 
+	theme = getQueryVariable('theme'), 
+	firstColor = getQueryVariable('firstColor'), 
+	secondColor = getQueryVariable('secondColor'), 
+	textColor = getQueryVariable('textColor'),
+	buttonColor = getQueryVariable('buttonColor'),
+	buttonTextColor = getQueryVariable('buttonTextColor');
+
+if(theme !== undefined) {
+	if(theme == 'relaxed') {
+		if(firstColor == undefined) firstColor = '';
+		if(secondColor == undefined) secondColor = '';
+		if(textColor == undefined) textColor = '';
+		if(buttonColor == undefined) buttonColor = '';
+		if(buttonTextColor == undefined) buttonTextColor = '';
+		
+		$('<style>'+
+		'#kiwi .toolbar {background: linear-gradient(#' + firstColor + ', #' + secondColor + ') repeat scroll 0 0 rgba(0, 0, 0, 0);}' +
+		'#kiwi .controlbox {background: linear-gradient(#' + secondColor + ', #' + firstColor + ') repeat scroll 0 0 rgba(0, 0, 0, 0);}' +
+		'#kiwi .memberlists ul li.mode.o .prefix {background: none repeat scroll 0 0 #' + firstColor + ';}' +
+		'#kiwi .memberlists ul li:hover {border-left: 5px solid #' + firstColor + ';}' +
+		'#kiwi .messages .msg.action .text {color: #' + firstColor + ';}' +
+		'#kiwi .toolbar .panellist li .activity {background: none repeat scroll 0 0 #' + firstColor + ';}' +
+		'#kiwi .toolbar .panellist li {border: 1px solid #' + firstColor + ';}' +
+		'#kiwi .toolbar .topic {background-color: #' + secondColor + ';}' +
+		'#kiwi button, #kiwi .toolbar .panellist {background-color: #' + buttonColor + ';color:#' + buttonTextColor +
+		';}</style>').appendTo('body');
+	}
+}
+</script>
