@@ -1,57 +1,71 @@
 <script>
-var cookie;
+kiwi.plugins.on('loaded', function() {
+    var cookie;
 
-// Cookie functions
-function createCookie(name, value, days) {
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toGMTString();
-    }
-    else var expires = "";
+    // Cookie functions
+    function createCookie(name, value, days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            var expires = "; expires=" + date.toGMTString();
+        }
+        else var expires = "";
 
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-function eraseCookie(name) {
-    createCookie(name, "", -1);
-}
-
-// End cookie functions
-
-
-
-// var network = kiwi.components.Network();
-//network.on('connect', function(event) {
-cookie = readCookie('kiwi_username');
-
-
-// Create and store the username
-if (cookie == null) {
-    var prefixes = {'3': 'c-', '4': 'e-'}, // list of EuropNet's source prefixes
-        origin = getQueryVariable('origin');
-
-    if(origin != '') {
-        prefix = prefixes[origin];
+        document.cookie = name + "=" + value + expires + "; path=/";
     }
 
-    if(prefix === undefined) {
-        prefix = 'u-';
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
     }
-    var username =  prefix + randomString(8);
-    // var value =  prefix + kiwi.connections.active.get('network').get('nick').substring(0, 8);
-    createCookie('kiwi_username', username, 30);
-}
-//});
+
+    function eraseCookie(name) {
+        createCookie(name, "", -1);
+    }
+
+    // End cookie functions
+
+    if(typeof randomString !== 'function') {
+        function randomString(string_length) {
+            var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz",
+                randomstring = '',
+                i,
+                rnum;
+            for (i = 0; i < string_length; i++) {
+                rnum = Math.floor(Math.random() * chars.length);
+                randomstring += chars.substring(rnum, rnum + 1);
+            }
+            return randomstring;
+        }
+    }
+
+    // var network = kiwi.components.Network();
+    //network.on('connect', function(event) {
+    cookie = readCookie('kiwi_username');
+
+
+    // Create and store the username
+    if (cookie == null) {
+        var prefixes = {'3': 'c-', '4': 'e-'}, // list of EuropNet's source prefixes
+            origin = getQueryVariable('origin');
+
+        if(origin != '') {
+            prefix = prefixes[origin];
+        }
+
+        if(prefix === undefined) {
+            prefix = 'u-';
+        }
+        var username =  prefix + randomString(8);
+        // var value =  prefix + kiwi.connections.active.get('network').get('nick').substring(0, 8);
+        createCookie('kiwi_username', username, 30);
+    }
+    //});
+});
  </script>
