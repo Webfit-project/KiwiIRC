@@ -24,7 +24,12 @@
 				
 				// Add the action on the button
 				$(document).on("click","#chanlist",function() {
-					kiwi.components.Network().raw('LIST');
+					if($('.applet .applet_chanlist .chanlist_name').length == 0) {
+						kiwi.components.Network().raw('LIST');
+					} else {
+						// If chanlist is already open, just switch to the applet
+						kiwi.components.Applet.loadOnce('kiwi_chanlist').view.show();
+					}
 				});
 			},
 			
