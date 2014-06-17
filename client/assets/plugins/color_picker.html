@@ -26,7 +26,7 @@
 <div id="color-picker">
 	<img src="../kiwi/assets/img/color_picker.png">
 	<ul id="color-box">
-		<li data-color="0" style="background-color: #FFFFFF;border-radius: 5px 0px 0px 0px;"><i class="icon-undo" style="position: absolute;top:3px;font-size: 15px;left: 1px;"></i></li>
+		<li data-color="0" style="background-color: #FFFFFF;border-radius: 5px 0px 0px 0px;"><i class="fa fa-undo" style="position: absolute;top:3px;font-size: 15px;left: 4px;"></i></li>
 		<li data-color="1" style="background-color: #000000">&nbsp;</li>
 		<li data-color="2" style="background-color: #000080">&nbsp;</li>
 		<li data-color="3" style="background-color: #008000;border-radius: 0px 5px 0px 0px;">&nbsp;</li>
@@ -74,12 +74,13 @@
 		$colors.find('li').click(function(e){
 			e.stopPropagation();
 			$this = $(this);
-			if($this.data('color') > 1) {
-			    $area.css('color', $this.css('background-color'));
-				selected_color = $this.data('color');
+			selected_color = $this.data('color') || null;
+			if(selected_color === null || selected_color == 0) {
+				$area.css('color', '#000');
 			} else {
-				selected_color = null;
+				$area.css('color', $this.css('background-color'));
 			}
+
 			$this.parent().hide();
 		});
 	
@@ -88,7 +89,9 @@
 	
 			 if((code == 13 && selected_color) && (code != 1)) {
 				if ($area.val().substr(0, 1) != "/") {
-					$area.val('\x03'+selected_color+$area.val());
+					if(selected_color > 1) {
+						$area.val('\x03'+selected_color+$area.val());
+					}
 				}
 			}
 		});
