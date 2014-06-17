@@ -22,27 +22,56 @@
         locale,
         network = kiwi.components.Network();
 
+
     locale_strings = {
         'en': {
-            'reduce_text': 'Reduce text size',
-            'increase_text': 'Increase text size'
+            "font_size" : {
+                "" : {
+                    "domain" : "font_size",
+                    "lang" : "en"
+                },
+                "reduce_text" : [ null, "Reduce text size" ],
+                "increase_text" : [ null, "Increase text size" ]
+            }
         },
         'it': {
-            'reduce_text': 'Disminuir texto',
-            'increase_text': 'Aumentar texto'
+            "font_size" : {
+                "" : {
+                    "domain" : "font_size",
+                    "lang" : "it"
+                },
+                "reduce_text" : [ null, "Disminuir texto" ],
+                "increase_text" : [ null, "Aumentar texto" ]
+            }
         },
         'fr': {
-            'reduce_text': 'Réduire le texte',
-            'increase_text': 'Agrandir le texte'
+            "font_size" : {
+                "" : {
+                    "domain" : "font_size",
+                    "lang" : "fr"
+                },
+                "reduce_text" : [ null, "Réduire le texte" ],
+                "increase_text" : [ null, "Agrandir le texte" ]
+            }
         }
     }
-    locale = (locale_strings[navigator.language]) ? locale_strings[navigator.language] : locale_strings['en'];
+    // Create a new instance
+    locale = new Jed({
+        "domain" : "font_size",
+        "missing_key_callback" : function(key) {
+            console.error(key)
+        },
+        "locale_data" : locale_strings[kiwi.i18n._textdomain] || locale_strings['en']
+    });
+
 
     network.on('connect', function (event) {
         $('#formatMenu').show();
     });
 
-    $("div.panels div.panel_container").prepend("<div id='formatMenu'><div id='decreaseText' title='Disminuir texto'>A<sup>-</sup></div><div id='increaseText' title='Aumentar texto'>A<sup>+</sup></div></div>");
+    $("div.panels div.panel_container").prepend("<div id='formatMenu'><div id='decreaseText' title='" + 
+        locale.translate('reduce_text').fetch() + "'>A<sup>-</sup></div><div id='increaseText' title='" + 
+        locale.translate('increase_text').fetch() + "'>A<sup>+</sup></div></div>");
 
 
     var values = [];
