@@ -110,7 +110,7 @@ fs.readdir('client/assets/locales', function (err, files) {
  * set in the browser.
  **/
 var serveMagicLocale = function (request, response) {
-    var default_locale_id = 'en-gb',
+    var default_locale_id = 'fr',
         found_locale, negotiator;
 
     if (!request.headers['accept-language']) {
