@@ -14,7 +14,7 @@ _kiwi.view.Member = Backbone.View.extend({
         return this;
     },
     enrich: function () {
-        var gender = this.model.get('gender'),
+        var gender = _.escape(this.model.get('gender')),
             $this = this.$el,
             status = '',
             tooltip_content,
@@ -36,7 +36,7 @@ _kiwi.view.Member = Backbone.View.extend({
             tooltip_content = '<div class="tooltipNick">' + this.model.get('nick') + '</div>';
             tooltip_content += '<div class="tooltipInfo">';
             if (this.model.get('age') !== '') {
-                tooltip_content += this.model.get('age') + ' ' + _kiwi.global.i18n.translate('client_views_member_years_old').fetch() + ', ';
+                tooltip_content += _.escape(this.model.get('age')) + ' ' + _kiwi.global.i18n.translate('client_views_member_years_old').fetch() + ', ';
             }
             tooltip_content += _kiwi.global.i18n.translate('client_views_member_gender_' + gender).fetch();
             tooltip_content += '<br />';
@@ -49,7 +49,7 @@ _kiwi.view.Member = Backbone.View.extend({
             }
             
             if (this.model.get('info') !== '') {
-                tooltip_content += this.model.get('info');
+                tooltip_content += _.escape(this.model.get('info'));
             }
             tooltip_content += '</div>';
             
