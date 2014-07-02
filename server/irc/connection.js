@@ -56,6 +56,7 @@ var IrcConnection = function (hostname, port, ssl, nick, user, options, state, c
     this.nick = nick;
     this.user = user;  // Contains users real hostname and address
     this.username = this.nick.replace(/[^0-9a-zA-Z\-_.\/]/, '');
+    this.gecos = ''; // Users real-name. Uses default from config if empty
     this.password = options.password || '';
     
     if (global.config.client.settings.rich_nicklist && global.config.client.settings.rich_nicklist_track_asl) {
@@ -620,6 +621,15 @@ var socketConnectHandler = function () {
         } else if (global.config.default_gecos) {
             gecos = gecos.toString().replace('%h', that.user.hostname);
         } else {
+        var gecos = that.gecos;
+
+        if (!gecos && global.config.default_gecos) {
+            // We don't have a gecos yet, so use the default
+            gecos = global.config.default_gecos.toString().replace('%n', that.nick);
+            gecos = gecos.replace('%h', that.user.hostname);
+
+        } else if (!gecos) {
+            // We don't have a gecos nor a default, so lets set somthing
             gecos = '[www.kiwiirc.com] ' + that.nick;
         }
 
