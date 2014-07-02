@@ -547,7 +547,6 @@ msgstr "%s AM"
 #: 
 msgid "client_views_panel_timestamp_pm"
 msgstr "%s PM"
->>>>>>> origin/ASL_status
 
 #: 
 msgid "client_models_application_has_been_invited"

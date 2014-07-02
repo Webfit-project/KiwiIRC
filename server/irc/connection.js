@@ -614,16 +614,11 @@ var socketConnectHandler = function () {
     connect_data = findWebIrc.call(this, connect_data);
 
     global.modules.emit('irc authorize', connect_data).done(function ircAuthorizeCb() {
-        var gecos;
+        var gecos = that.gecos;
 
         if (global.config.client.settings.rich_nicklist && global.config.client.settings.rich_nicklist_track_asl) {
             gecos = that.age + ' ' + that.gender + ' ' + that.location;
-        } else if (global.config.default_gecos) {
-            gecos = gecos.toString().replace('%h', that.user.hostname);
-        } else {
-        var gecos = that.gecos;
-
-        if (!gecos && global.config.default_gecos) {
+        } else if (!gecos && global.config.default_gecos) {
             // We don't have a gecos yet, so use the default
             gecos = global.config.default_gecos.toString().replace('%n', that.nick);
             gecos = gecos.replace('%h', that.user.hostname);
@@ -651,7 +646,7 @@ var socketConnectHandler = function () {
 
         that.emit('connected');
     });
-};
+}
 
 
 
