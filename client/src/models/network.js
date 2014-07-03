@@ -87,7 +87,7 @@
             var that = this,
                 server_info = {
                     nick:       this.get('nick'),
-                    host:   this.get('address'),
+                    host:       this.get('address'),
                     port:       this.get('port'),
                     ssl:        this.get('ssl'),
                     password:   this.get('password')
@@ -244,7 +244,9 @@
 
     function onDisconnect(event) {
         $.each(this.panels.models, function (index, panel) {
-            panel.addMsg('', styleText('network_disconnected', {text: translateText('client_models_network_disconnected', [])}), 'action quit');
+            if (!panel.isApplet()) {
+                panel.addMsg('', styleText('network_disconnected', {text: translateText('client_models_network_disconnected', [])}), 'action quit');
+            }
         });
     }
 
